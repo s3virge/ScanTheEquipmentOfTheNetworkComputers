@@ -39,20 +39,6 @@ namespace ScanTheEquipmentOfTheNetworkComputers
             return result;
         }
 
-        // определение асинхронного метода
-        static async void GetHWInfoAsync(string host)
-        {
-            string output = await Task.Run(() => GetInfo(host));
-
-            //Console.Write($"{output}{ Output.lineSeparator}");           
-            //lock (lockObj)
-            { 
-                Console.SetCursorPosition(0, 4);
-                Console.Write($"Hosts complited: {count++}. Please wait.");
-                _allCompInfo.Add(output);
-            }            
-        }
-
         static void Main(string[] args)
         {
             ActiveDirectory ad = new ActiveDirectory();
@@ -68,8 +54,6 @@ namespace ScanTheEquipmentOfTheNetworkComputers
             int c = 0;
             foreach (string computer in computers)
             {
-                //GetHWInfoAsync(computer as string);
-                //tasks.Add(Task.Factory.StartNew(() => GetHWInfoAsync(computer)));
                 tasks.Add(Task.Factory.StartNew(
                     () => {
                         _allCompInfo.Add(GetInfo(computer));                                            
